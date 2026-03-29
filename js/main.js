@@ -44,7 +44,10 @@ const bgColors = ['#0d1117', '#0e1219', '#0f1318'];
 // ---- Input ----
 window.addEventListener('keydown', e => {
   keys[e.key] = true;
-  if (state === 'title') { state = 'charSelect'; }
+  if (state === 'title') {
+    Audio.init(); Audio.resume(); Audio.startBGM();
+    state = 'charSelect';
+  }
   Audio.init(); Audio.resume();
 });
 window.addEventListener('keyup', e => { keys[e.key] = false; });
@@ -64,7 +67,10 @@ canvas.addEventListener('click', e => {
   const scaleY = canvas.height / rect.height;
   const mx = (e.clientX - rect.left) * scaleX;
   const my = (e.clientY - rect.top) * scaleY;
-  if (state === 'title') { state = 'charSelect'; return; }
+  if (state === 'title') {
+    Audio.init(); Audio.resume(); Audio.startBGM();
+    state = 'charSelect'; return;
+  }
   Audio.init(); Audio.resume();
   handleClick(mx, my);
 });
@@ -189,8 +195,7 @@ function startGame() {
   EnemySpawner.reset();
   Audio.stopBGM();
   Audio.startBGM();
-  state = 'playing';
-}
+  state = 'playing';}
 
 // ---- Collision helpers ----
 function circleCollide(ax, ay, ar, bx, by, br) {

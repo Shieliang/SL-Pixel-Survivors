@@ -9,7 +9,7 @@ const Audio = {
     if (this.ctx) return;
     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
     this.masterGain = this.ctx.createGain();
-    this.masterGain.gain.value = 0.5;
+    this.masterGain.gain.value = 0.25;
     this.masterGain.connect(this.ctx.destination);
   },
 
@@ -19,7 +19,7 @@ const Audio = {
 
   toggleMute() {
     this.muted = !this.muted;
-    this.masterGain.gain.value = this.muted ? 0 : 0.5;
+    this.masterGain.gain.value = this.muted ? 0 : 0.25;
     return this.muted;
   },
 
