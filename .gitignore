@@ -1,3 +1,2 @@
 .vscode/
-*.json
-!package.json
+cf-config.json
