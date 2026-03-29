@@ -1,2 +1,4 @@
 .vscode/
 cf-config.json
+asset/
+*.zip
