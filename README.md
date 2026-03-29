@@ -24,6 +24,16 @@ Pure HTML5 Canvas + Vanilla JS — no frameworks, no build step. Just open `inde
 
 Hosted on AWS S3 + CloudFront. CI/CD via GitHub Actions on push to `main`.
 
+## Built with Kiro
+
+This project was built with [Kiro](https://kiro.dev), an AI-powered IDE that helps developers design, build, and ship software faster.
+
+## Support
+
+If you enjoy the game, consider buying me a coffee!
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-shieliang22-yellow?style=flat&logo=buy-me-a-coffee)](https://www.buymeacoffee.com/shieliang22)
+
 ## License
 
 MIT
