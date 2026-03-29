@@ -45,6 +45,7 @@ const bgColors = ['#0d1117', '#0e1219', '#0f1318'];
 window.addEventListener('keydown', e => {
   keys[e.key] = true;
   if (state === 'title') { state = 'charSelect'; }
+  Audio.init(); Audio.resume();
 });
 window.addEventListener('keyup', e => { keys[e.key] = false; });
 
@@ -64,6 +65,7 @@ canvas.addEventListener('click', e => {
   const mx = (e.clientX - rect.left) * scaleX;
   const my = (e.clientY - rect.top) * scaleY;
   if (state === 'title') { state = 'charSelect'; return; }
+  Audio.init(); Audio.resume();
   handleClick(mx, my);
 });
 
@@ -153,6 +155,13 @@ function handleClick(mx, my) {
     }
   }
 
+  if (state === 'playing' || state === 'levelUp') {
+    // Mute toggle top-right
+    if (mx >= canvas.width - 30 && mx <= canvas.width && my >= 28 && my <= 54) {
+      Audio.init(); Audio.toggleMute();
+    }
+  }
+
   if (state === 'levelUp' && hoveredLevelUp >= 0) {
     levelUpOptions[hoveredLevelUp].apply(player);
     levelUpOptions = [];
@@ -178,6 +187,8 @@ function startGame() {
   waveAlertTimer = 0;
   goldEarned = 0;
   EnemySpawner.reset();
+  Audio.stopBGM();
+  Audio.startBGM();
   state = 'playing';
 }
 
@@ -201,8 +212,11 @@ function update() {
   if (attack) {
     if (Array.isArray(attack)) {
       for (const b of attack) projectiles.push(b);
+      Audio.shoot();
+      if (attack.length > 1) Audio.shootExtra();
     } else {
       projectiles.push(attack);
+      Audio.swordSwing();
     }
   }
 
@@ -215,6 +229,7 @@ function update() {
       for (const e of enemies) {
         if (!p.hit.has(e) && circleCollide(p.x, p.y, 5, e.x, e.y, e.size / 2)) {
           e.takeDamage(p.damage);
+          Audio.enemyHit();
           p.hit.add(e);
           if (p.hit.size >= p.pierce) { p.dead = true; break; }
         }
@@ -234,6 +249,7 @@ function update() {
         while (angle > start + Math.PI) angle -= Math.PI * 2;
         if (angle >= start && angle <= end) {
           e.takeDamage(p.damage);
+          Audio.enemyHit();
           p.hit.add(e);
         }
       }
@@ -251,12 +267,15 @@ function update() {
     if (circleCollide(e.x, e.y, e.size / 2 - 4, player.x, player.y, 12)) {
       if (!e.damageCooldown || e.damageCooldown <= 0) {
         player.takeDamage(e.damage);
-        e.damageCooldown = 60; // 1 hit per second per enemy
+        Audio.playerHurt();
+        e.damageCooldown = 60;
       }
     }
     if (e.damageCooldown > 0) e.damageCooldown--;
 
     if (e.dead) {
+      if (e.type === 'boss') Audio.bossDie();
+      else Audio.enemyDie();
       // Drop XP
       drops.push(new Drop(e.x, e.y, 'xp', e.xp));
       // Drop gold
@@ -274,12 +293,16 @@ function update() {
       if (d.type === 'xp') {
         const leveled = player.gainXp(d.value);
         if (leveled) {
+          Audio.levelUp();
           levelUpOptions = Upgrades.getRandomLevelUps(3, player.type);
           state = 'levelUp';
+        } else {
+          Audio.xpPickup();
         }
       } else {
         saveData.gold += d.value;
         goldEarned += d.value;
+        Audio.goldPickup();
         Storage.save(saveData);
       }
       drops.splice(i, 1);
@@ -288,7 +311,7 @@ function update() {
 
   // Spawn enemies
   const waved = EnemySpawner.update(enemies, canvas.width, canvas.height, player.x, player.y, difficulty);
-  if (waved) { waveCount++; waveAlertTimer = 180; }
+  if (waved) { waveCount++; waveAlertTimer = 180; Audio.waveAlert(); }
   if (waveAlertTimer > 0) waveAlertTimer--;
 
   // Player dead
@@ -297,6 +320,8 @@ function update() {
       saveData.bestTime = gameTime;
       Storage.save(saveData);
     }
+    Audio.stopBGM();
+    Audio.gameOver();
     state = 'gameOver';
   }
 }

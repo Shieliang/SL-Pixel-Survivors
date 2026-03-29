@@ -51,6 +51,10 @@ const UI = {
 
     // Wave
     this.drawText(ctx, `Wave ${waveCount}`, W - 10, 18, 12, '#e67e22', 'right');
+
+    // Mute button
+    const muted = typeof Audio !== 'undefined' && Audio.muted;
+    this.drawText(ctx, muted ? '🔇' : '🔊', W - 14, 40, 14, '#aaa', 'right');
   },
 
   drawWaveAlert(ctx, alpha) {
