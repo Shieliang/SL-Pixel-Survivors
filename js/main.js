@@ -46,7 +46,9 @@ window.addEventListener('keydown', e => {
   keys[e.key] = true;
   if (state === 'title') {
     Audio.init(); Audio.resume(); Audio.startBGM();
+    // Stay on title briefly so music is heard, transition handled by titleTime
     state = 'charSelect';
+    return;
   }
   Audio.init(); Audio.resume();
 });
@@ -177,6 +179,7 @@ function handleClick(mx, my) {
 
   if (state === 'gameOver') {
     if (mx >= W / 2 - 80 && mx <= W / 2 + 80 && my >= H / 2 + 65 && my <= H / 2 + 101) {
+      Audio.startBGM();
       state = 'charSelect';
     }
   }
@@ -193,8 +196,7 @@ function startGame() {
   waveAlertTimer = 0;
   goldEarned = 0;
   EnemySpawner.reset();
-  Audio.stopBGM();
-  Audio.startBGM();
+  if (!Audio.bgmPlaying) Audio.startBGM();
   state = 'playing';}
 
 // ---- Collision helpers ----
