@@ -32,7 +32,7 @@ This project was built with [Kiro](https://kiro.dev), an AI-powered IDE that hel
 
 If you enjoy the game, consider buying me a coffee!
 
-[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-shieliang22-yellow?style=flat&logo=buy-me-a-coffee)](https://www.buymeacoffee.com/shieliang22)
+<a href="https://www.buymeacoffee.com/shieliang22" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217"></a>
 
 ## License
 
