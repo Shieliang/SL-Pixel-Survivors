@@ -21,3 +21,19 @@ body {
   cursor: default;
 }
 
+#bmc-btn {
+  display: block;
+  margin-top: 8px;
+  text-align: center;
+  color: #f1c40f;
+  font-family: monospace;
+  font-size: 13px;
+  text-decoration: none;
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+
+#bmc-btn:hover {
+  opacity: 1;
+}
+
