@@ -29,13 +29,15 @@ body {
 }
 
 #bmc-btn img {
-  height: 50px;
+  height: 36px;
   width: auto;
-  opacity: 0.9;
-  transition: opacity 0.2s, transform 0.2s;
+  opacity: 0.25;
+  transition: opacity 0.3s, transform 0.3s;
+  filter: grayscale(40%);
 }
 
 #bmc-btn:hover img {
-  opacity: 1;
+  opacity: 0.9;
   transform: scale(1.05);
+  filter: grayscale(0%);
 }
