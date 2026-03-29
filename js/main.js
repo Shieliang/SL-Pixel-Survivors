@@ -197,6 +197,7 @@ function startGame() {
   goldEarned = 0;
   EnemySpawner.reset();
   if (!Audio.bgmPlaying) Audio.startBGM();
+  CrazySDK.gameplayStart();
   state = 'playing';}
 
 // ---- Collision helpers ----
@@ -329,6 +330,8 @@ function update() {
     }
     Audio.stopBGM();
     Audio.gameOver();
+    CrazySDK.gameplayStop();
+    CrazySDK.showAd();
     state = 'gameOver';
   }
 }
@@ -414,3 +417,4 @@ function loop() {
 }
 
 loop();
+CrazySDK.init();

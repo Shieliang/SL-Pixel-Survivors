@@ -283,3 +283,36 @@ const Audio = {
     this.bgmNodes = [];
   }
 };
+
+// ---- CrazyGames SDK ----
+const CrazySDK = {
+  ready: false,
+
+  async init() {
+    try {
+      await window.CrazyGames?.SDK?.init();
+      this.ready = true;
+    } catch {}
+  },
+
+  // Call when gameplay starts
+  gameplayStart() {
+    try { window.CrazyGames?.SDK?.game?.gameplayStart(); } catch {}
+  },
+
+  // Call when gameplay stops (pause, game over, menu)
+  gameplayStop() {
+    try { window.CrazyGames?.SDK?.game?.gameplayStop(); } catch {}
+  },
+
+  // Show a midgame ad (e.g. on game over)
+  async showAd() {
+    if (!this.ready) return;
+    try {
+      Audio.masterGain.gain.value = 0; // mute during ad
+      await window.CrazyGames?.SDK?.ad?.requestAd('midgame');
+    } catch {}
+    // Restore volume after ad
+    Audio.masterGain.gain.value = Audio.muted ? 0 : 0.25;
+  }
+};
