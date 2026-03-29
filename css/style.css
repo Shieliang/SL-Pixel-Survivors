@@ -23,21 +23,17 @@ body {
 
 #bmc-btn {
   display: block;
-  margin-top: 16px;
+  margin-top: 8px;
   text-align: center;
+  color: #f1c40f;
+  font-family: monospace;
+  font-size: 13px;
   text-decoration: none;
+  opacity: 0.4;
+  transition: opacity 0.3s;
 }
 
-#bmc-btn img {
-  height: 36px;
-  width: auto;
-  opacity: 0.25;
-  transition: opacity 0.3s, transform 0.3s;
-  filter: grayscale(40%);
+#bmc-btn:hover {
+  opacity: 1;
 }
 
-#bmc-btn:hover img {
-  opacity: 0.9;
-  transform: scale(1.05);
-  filter: grayscale(0%);
-}
