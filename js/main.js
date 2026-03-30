@@ -7,7 +7,7 @@ const ctx = canvas.getContext('2d');
 // Responsive canvas
 function resize() {
   const maxW = 800, maxH = 600;
-  const scale = Math.min(window.innerWidth / maxW, window.innerHeight / maxH, 1);
+  const scale = Math.min(window.innerWidth / maxW, window.innerHeight / maxH);
   canvas.width = maxW;
   canvas.height = maxH;
   canvas.style.width = Math.floor(maxW * scale) + 'px';
